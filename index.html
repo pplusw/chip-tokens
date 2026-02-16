@@ -8,27 +8,44 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 <style>
-  :root { --accent: #FF6D0A; --accent-hover: #e5600a; --accent-bg: #FFF7F2; --accent-light: #FFF2E8; }
+  :root {
+    --accent: #FF6D0A; --accent-hover: #e5600a; --accent-bg: #FFF7F2; --accent-light: #FFF2E8;
+    --bg: #F5F3F0; --bg-card: #fff; --bg-card-hover: rgba(0,0,0,.06);
+    --text: #1a1a1a; --text-heading: #111; --text-muted: #999; --text-dim: #bbb; --text-code: #777;
+    --border: #ddd; --border-light: #eee; --border-card: #e8e5e0; --border-ctrl: #e0e0e0;
+    --modal-bg: rgba(0,0,0,.4); --toast-bg: #1a1a1a; --toast-text: #fff;
+    --swatch-border: rgba(0,0,0,.06);
+    color-scheme: light;
+  }
+  [data-theme="dark"] {
+    --accent: #FF8533; --accent-hover: #FF6D0A; --accent-bg: rgba(255,109,10,.12); --accent-light: rgba(255,109,10,.08);
+    --bg: #161618; --bg-card: #1e1e21; --bg-card-hover: rgba(255,255,255,.04);
+    --text: #e0e0e0; --text-heading: #f0f0f0; --text-muted: #777; --text-dim: #555; --text-code: #888;
+    --border: #333; --border-light: #2a2a2d; --border-card: #2a2a2d; --border-ctrl: #3a3a3d;
+    --modal-bg: rgba(0,0,0,.6); --toast-bg: #f0f0f0; --toast-text: #111;
+    --swatch-border: rgba(255,255,255,.08);
+    color-scheme: dark;
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'DM Sans', system-ui, sans-serif; background: #F5F3F0; color: #1a1a1a; min-height: 100vh; padding: 40px 24px; }
+  body { font-family: 'DM Sans', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 40px 24px; transition: background .3s, color .3s; }
   .container { max-width: 960px; margin: 0 auto; }
 
   /* Header */
   header { margin-bottom: 36px; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-  h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; color: #111; }
-  .subtitle { font-size: 13px; color: #999; margin-top: 4px; }
-  .base-color { display: flex; align-items: center; gap: 10px; padding: 8px 16px 8px 8px; background: #fff; border-radius: 12px; border: 1px solid #e8e5e0; }
+  h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; color: var(--text-heading); }
+  .subtitle { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+  .base-color { display: flex; align-items: center; gap: 10px; padding: 8px 16px 8px 8px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-card); }
   .base-color-swatch { width: 36px; height: 36px; border-radius: 8px; background: var(--accent); }
   .base-color-label { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 500; color: var(--accent); }
-  .base-color-desc { font-size: 11px; color: #aaa; }
+  .base-color-desc { font-size: 11px; color: var(--text-muted); }
 
   /* Info bar */
-  .edit-info { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #999; margin-bottom: 20px; padding: 12px 16px; background: #fff; border-radius: 10px; border: 1px dashed #ddd; line-height: 1.5; flex-wrap: wrap; }
+  .edit-info { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); margin-bottom: 20px; padding: 12px 16px; background: var(--bg-card); border-radius: 10px; border: 1px dashed var(--border); line-height: 1.5; flex-wrap: wrap; }
   .edit-info .mi { font-size: 16px; color: var(--accent); }
 
   /* Buttons */
   .export-bar { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
-  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 10px; border: 1px solid #ddd; background: #fff; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: #444; cursor: pointer; transition: all .15s; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-card); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: var(--text); cursor: pointer; transition: all .15s; }
   .btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
   .btn:active { transform: scale(.97); }
   .btn svg { width: 15px; height: 15px; }
@@ -36,13 +53,13 @@
   .btn--primary:hover { background: var(--accent-hover); color: #fff; }
 
   /* Toast */
-  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1a1a1a; color: #fff; padding: 10px 20px; border-radius: 10px; font-size: 13px; font-family: 'JetBrains Mono', monospace; opacity: 0; transition: all .3s cubic-bezier(.34,1.56,.64,1); z-index: 300; pointer-events: none; }
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--toast-bg); color: var(--toast-text); padding: 10px 20px; border-radius: 10px; font-size: 13px; font-family: 'JetBrains Mono', monospace; opacity: 0; transition: all .3s cubic-bezier(.34,1.56,.64,1); z-index: 300; pointer-events: none; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
   /* Rows */
   .rows { display: flex; flex-direction: column; gap: 3px; }
-  .row { display: grid; grid-template-columns: 380px 1fr; align-items: center; padding: 18px 24px; background: #fff; border-radius: 14px; transition: box-shadow .2s; }
-  .row:hover { box-shadow: 0 2px 16px rgba(0,0,0,.06); }
+  .row { display: grid; grid-template-columns: 380px 1fr; align-items: center; padding: 18px 24px; background: var(--bg-card); border-radius: 14px; transition: box-shadow .2s, background .3s; }
+  .row:hover { box-shadow: 0 2px 16px var(--bg-card-hover); }
   .row-left { display: flex; flex-direction: column; gap: 8px; }
   .chip-row { display: flex; align-items: center; gap: 8px; }
 
@@ -55,52 +72,58 @@
   .chip-label { outline: none; border: none; background: none; font: inherit; color: inherit; padding: 0; cursor: default; min-width: 40px; }
   .chip-label:focus { cursor: text; }
   .chip.editing { box-shadow: 0 0 0 2px currentColor; transform: scale(1.03); }
-  .token-name { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: #bbb; padding-left: 2px; letter-spacing: -0.3px; }
+  .token-name { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--text-dim); padding-left: 2px; letter-spacing: -0.3px; }
 
   /* Controls */
   .chip-controls { display: flex; gap: 4px; opacity: 0; transition: opacity .15s; }
   .row:hover .chip-controls { opacity: 1; }
-  .ctrl-btn { width: 28px; height: 28px; border-radius: 7px; border: 1px solid #e0e0e0; background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .15s; color: #999; }
+  .ctrl-btn { width: 28px; height: 28px; border-radius: 7px; border: 1px solid var(--border-ctrl); background: var(--bg-card); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .15s; color: var(--text-muted); }
   .ctrl-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
   .ctrl-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
   .ctrl-btn .mi { font-size: 16px; }
 
-  /* Shared icon picker (single instance, positioned absolutely) */
-  .icon-picker { position: fixed; background: #fff; border: 1px solid #e0e0e0; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,.15); padding: 8px; z-index: 250; width: 252px; display: none; }
+  /* Shared icon picker */
+  .icon-picker { position: fixed; background: var(--bg-card); border: 1px solid var(--border-ctrl); border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,.15); padding: 8px; z-index: 250; width: 252px; display: none; }
   .icon-picker.open { display: block; }
-  .icon-picker-search { width: 100%; border: 1px solid #eee; border-radius: 8px; padding: 7px 10px; font-size: 12px; font-family: 'DM Sans', sans-serif; outline: none; margin-bottom: 6px; }
+  .icon-picker-search { width: 100%; border: 1px solid var(--border-light); border-radius: 8px; padding: 7px 10px; font-size: 12px; font-family: 'DM Sans', sans-serif; outline: none; margin-bottom: 6px; background: var(--bg); color: var(--text); }
   .icon-picker-search:focus { border-color: var(--accent); }
   .icon-picker-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 2px; max-height: 200px; overflow-y: auto; }
   .icon-picker-grid::-webkit-scrollbar { width: 4px; }
-  .icon-picker-grid::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
-  .ip-item { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 6px; cursor: pointer; transition: background .1s, color .1s; border: none; background: none; color: #555; }
+  .icon-picker-grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  .ip-item { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 6px; cursor: pointer; transition: background .1s, color .1s; border: none; background: none; color: var(--text-muted); }
   .ip-item:hover { background: var(--accent-light); color: var(--accent); }
   .ip-item.selected { background: var(--accent); color: #fff; }
   .ip-item .mi { font-size: 20px; }
-  .ip-none { padding: 6px; font-size: 11px; color: #999; cursor: pointer; border-radius: 6px; text-align: center; border: none; background: none; width: 100%; }
-  .ip-none:hover { background: #f5f5f5; color: var(--accent); }
+  .ip-none { padding: 6px; font-size: 11px; color: var(--text-muted); cursor: pointer; border-radius: 6px; text-align: center; border: none; background: none; width: 100%; }
+  .ip-none:hover { background: var(--accent-light); color: var(--accent); }
 
   /* Swatches */
   .row-right { display: flex; gap: 16px; justify-content: flex-end; }
   .swatch { display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; transition: transform .15s; }
   .swatch:hover { transform: scale(1.08); }
   .swatch:active { transform: scale(.94); }
-  .swatch-box { width: 48px; height: 48px; border-radius: 10px; border: 1px solid rgba(0,0,0,.06); transition: border-radius .2s; }
+  .swatch-box { width: 48px; height: 48px; border-radius: 10px; border: 1px solid var(--swatch-border); transition: border-radius .2s; }
   .swatch:hover .swatch-box { border-radius: 14px; }
-  .swatch-hex { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: #777; letter-spacing: -0.3px; }
-  .swatch-label { font-size: 8.5px; color: #bbb; text-transform: uppercase; letter-spacing: .8px; font-weight: 500; }
+  .swatch-hex { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--text-code); letter-spacing: -0.3px; }
+  .swatch-label { font-size: 8.5px; color: var(--text-dim); text-transform: uppercase; letter-spacing: .8px; font-weight: 500; }
 
   /* Modal */
-  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 200; padding: 24px; }
+  .modal-overlay { position: fixed; inset: 0; background: var(--modal-bg); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 200; padding: 24px; }
   .modal-overlay.open { display: flex; }
-  .modal { background: #fff; border-radius: 16px; width: 100%; max-width: 640px; max-height: 80vh; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 24px 64px rgba(0,0,0,.2); }
-  .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid #eee; }
+  .modal { background: var(--bg-card); border-radius: 16px; width: 100%; max-width: 640px; max-height: 80vh; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 24px 64px rgba(0,0,0,.3); }
+  .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid var(--border-light); }
   .modal-title { font-size: 16px; font-weight: 600; }
-  .modal-close { width: 32px; height: 32px; border-radius: 8px; border: none; background: #f5f5f5; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #666; }
-  .modal-close:hover { background: #eee; }
+  .modal-close { width: 32px; height: 32px; border-radius: 8px; border: none; background: var(--accent-light); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--text-muted); }
+  .modal-close:hover { background: var(--accent-bg); }
   .modal-body { padding: 20px 24px; overflow-y: auto; flex: 1; }
-  .modal-body pre { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.7; color: #333; white-space: pre-wrap; word-break: break-all; }
-  .modal-footer { display: flex; justify-content: flex-end; gap: 8px; padding: 16px 24px; border-top: 1px solid #eee; }
+  .modal-body pre { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.7; color: var(--text); white-space: pre-wrap; word-break: break-all; }
+  .modal-footer { display: flex; justify-content: flex-end; gap: 8px; padding: 16px 24px; border-top: 1px solid var(--border-light); }
+
+  /* Theme toggle */
+  .theme-toggle { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border-card); background: var(--bg-card); cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: all .2s; flex-shrink: 0; }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
+  .theme-toggle .mi { font-size: 20px; transition: transform .3s; }
+  [data-theme="dark"] .theme-toggle .mi { transform: rotate(180deg); }
 
   @media (max-width: 750px) {
     .row { grid-template-columns: 1fr; gap: 14px; }
@@ -116,11 +139,16 @@
       <h1>Chip Color Tokens</h1>
       <p class="subtitle">Vzorník barev pro Figma · Klikni na swatch pro kopírování HEX</p>
     </div>
-    <div class="base-color">
-      <div class="base-color-swatch"></div>
-      <div>
-        <div class="base-color-label">#FF6D0A</div>
-        <div class="base-color-desc">Base color</div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <button class="theme-toggle" id="themeToggle" title="Přepnout tmavý/světlý režim">
+        <span class="mi material-icons-outlined">dark_mode</span>
+      </button>
+      <div class="base-color">
+        <div class="base-color-swatch"></div>
+        <div>
+          <div class="base-color-label">#FF6D0A</div>
+          <div class="base-color-desc">Base color</div>
+        </div>
       </div>
     </div>
   </header>
@@ -161,6 +189,21 @@
 <script>
 (() => {
 'use strict';
+
+// ── Theme ──
+const html = document.documentElement;
+const themeBtn = document.getElementById('themeToggle');
+const themeIcon = themeBtn.querySelector('.mi');
+const savedTheme = localStorage.getItem('chip-theme') || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
+html.dataset.theme = savedTheme;
+themeIcon.textContent = savedTheme === 'dark' ? 'light_mode' : 'dark_mode';
+
+themeBtn.addEventListener('click', () => {
+  const next = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  html.dataset.theme = next;
+  themeIcon.textContent = next === 'dark' ? 'light_mode' : 'dark_mode';
+  localStorage.setItem('chip-theme', next);
+});
 
 // ── Data ──
 const MD_ICONS = 'check_circle,cancel,error,warning,info,help,schedule,update,verified,pending,task_alt,published_with_changes,build,settings,tune,construction,engineering,handyman,description,article,edit_document,note,summarize,content_paste,assignment,assignment_turned_in,assignment_late,assignment_return,flag,bookmark,label,sell,loyalty,new_releases,gavel,policy,security,shield,lock,admin_panel_settings,search,analytics,insights,trending_up,monitoring,assessment,send,forward,reply,archive,delete,restore,visibility,visibility_off,done,done_all,remove_done,sync,bolt,auto_fix_high,star,grade,thumb_up,thumb_down,notifications,campaign,announcement,report,bug_report,feedback,person,group,groups,support_agent,contact_support,manage_accounts,folder,topic,inventory,category,local_offer,receipt,event,today,calendar_month,timer,hourglass_empty,history,link,attach_file,cloud_upload,cloud_download,file_download,file_upload,code,terminal,data_object,integration_instructions,api,developer_mode,palette,brush,design_services,format_paint,color_lens,auto_awesome'.split(',');
