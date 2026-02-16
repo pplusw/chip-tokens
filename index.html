@@ -5,11 +5,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chip Color Tokens – Vzorník</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap');
   *{margin:0;padding:0;box-sizing:border-box}
   body{font-family:'DM Sans',system-ui,sans-serif;background:#F5F3F0;color:#1a1a1a;min-height:100vh;padding:40px 24px}
-  .container{max-width:920px;margin:0 auto}
+  .container{max-width:960px;margin:0 auto}
   header{margin-bottom:36px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
   h1{font-size:26px;font-weight:700;letter-spacing:-0.5px;color:#111}
   .subtitle{font-size:13px;color:#999;margin-top:4px}
@@ -17,8 +18,8 @@
   .base-color-swatch{width:36px;height:36px;border-radius:8px;background:#FF6D0A}
   .base-color-label{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;color:#FF6D0A}
   .base-color-desc{font-size:11px;color:#aaa}
-  .edit-info{display:flex;align-items:center;gap:6px;font-size:12px;color:#bbb;margin-bottom:20px;padding:10px 14px;background:#fff;border-radius:10px;border:1px dashed #ddd}
-  .edit-info svg{width:14px;height:14px;flex-shrink:0;color:#FF6D0A}
+  .edit-info{display:flex;align-items:center;gap:8px;font-size:12px;color:#999;margin-bottom:20px;padding:12px 16px;background:#fff;border-radius:10px;border:1px dashed #ddd;line-height:1.5;flex-wrap:wrap}
+  .edit-info .material-icons-outlined{font-size:16px;color:#FF6D0A}
   .export-bar{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
   .export-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:10px;border:1px solid #ddd;background:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:#444;cursor:pointer;transition:all .15s}
   .export-btn:hover{border-color:#FF6D0A;color:#FF6D0A;background:#FFF7F2}
@@ -26,22 +27,55 @@
   .export-btn svg{width:15px;height:15px}
   .export-btn.download{background:#FF6D0A;color:#fff;border-color:#FF6D0A}
   .export-btn.download:hover{background:#e5600a;color:#fff}
+
+  /* Toast */
   .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1a1a;color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-family:'JetBrains Mono',monospace;opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);z-index:100;pointer-events:none;max-width:400px;text-align:center}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* Rows */
   .rows{display:flex;flex-direction:column;gap:3px}
-  .row{display:grid;grid-template-columns:340px 1fr;align-items:center;padding:18px 24px;background:#fff;border-radius:14px;transition:box-shadow .2s}
+  .row{display:grid;grid-template-columns:380px 1fr;align-items:center;padding:18px 24px;background:#fff;border-radius:14px;transition:box-shadow .2s}
   .row:hover{box-shadow:0 2px 16px rgba(0,0,0,.06)}
   .row-left{display:flex;flex-direction:column;gap:8px}
+  .chip-row{display:flex;align-items:center;gap:8px}
+
+  /* Chip */
   .chip{display:inline-flex;align-items:center;gap:7px;padding:5px 14px 5px 9px;border-radius:999px;font-size:13px;font-weight:500;width:fit-content;transition:transform .15s,box-shadow .15s;cursor:default;position:relative}
   .chip:hover{transform:scale(1.03)}
   .chip-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .chip-dot.hidden{display:none}
+  .chip-icon{font-size:16px;flex-shrink:0;line-height:1}
+  .chip-icon.hidden{display:none}
   .chip-label{outline:none;border:none;background:none;font:inherit;color:inherit;padding:0;margin:0;cursor:default;min-width:40px}
   .chip-label:focus{cursor:text}
   .chip.editing{box-shadow:0 0 0 2px currentColor;transform:scale(1.03)}
-  .chip-edit-hint{position:absolute;right:-24px;top:50%;transform:translateY(-50%);opacity:0;transition:opacity .15s;pointer-events:none}
-  .chip:hover .chip-edit-hint{opacity:.4}
-  .chip.editing .chip-edit-hint{opacity:0}
   .token-name{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#bbb;padding-left:2px;letter-spacing:-0.3px}
+
+  /* Chip controls */
+  .chip-controls{display:flex;gap:4px;opacity:0;transition:opacity .15s}
+  .row:hover .chip-controls{opacity:1}
+  .ctrl-btn{width:28px;height:28px;border-radius:7px;border:1px solid #e0e0e0;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;position:relative;color:#999}
+  .ctrl-btn:hover{border-color:#FF6D0A;color:#FF6D0A;background:#FFF7F2}
+  .ctrl-btn.active{background:#FF6D0A;color:#fff;border-color:#FF6D0A}
+  .ctrl-btn .material-icons-outlined{font-size:16px}
+
+  /* Icon picker dropdown */
+  .icon-picker-wrap{position:relative}
+  .icon-picker{position:absolute;top:34px;left:50%;transform:translateX(-50%);background:#fff;border:1px solid #e0e0e0;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);padding:8px;z-index:50;display:none;width:240px}
+  .icon-picker.open{display:block}
+  .icon-picker-search{width:100%;border:1px solid #eee;border-radius:8px;padding:7px 10px;font-size:12px;font-family:'DM Sans',sans-serif;outline:none;margin-bottom:6px}
+  .icon-picker-search:focus{border-color:#FF6D0A}
+  .icon-picker-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;max-height:200px;overflow-y:auto}
+  .icon-picker-grid::-webkit-scrollbar{width:4px}
+  .icon-picker-grid::-webkit-scrollbar-thumb{background:#ddd;border-radius:2px}
+  .icon-pick-item{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:6px;cursor:pointer;transition:all .1s;border:none;background:none;color:#555}
+  .icon-pick-item:hover{background:#FFF2E8;color:#FF6D0A}
+  .icon-pick-item.selected{background:#FF6D0A;color:#fff}
+  .icon-pick-item .material-icons-outlined{font-size:20px}
+  .icon-picker-none{padding:6px 8px;font-size:11px;color:#999;cursor:pointer;border-radius:6px;text-align:center;border:none;background:none;width:100%}
+  .icon-picker-none:hover{background:#f5f5f5;color:#FF6D0A}
+
+  /* Swatches */
   .row-right{display:flex;gap:16px;justify-content:flex-end}
   .swatch{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:transform .15s}
   .swatch:hover{transform:scale(1.08)}
@@ -50,6 +84,8 @@
   .swatch:hover .swatch-box{border-radius:14px}
   .swatch-hex{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:#777;letter-spacing:-0.3px}
   .swatch-label{font-size:8.5px;color:#bbb;text-transform:uppercase;letter-spacing:.8px;font-weight:500}
+
+  /* Modal */
   .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:200;padding:24px}
   .modal-overlay.open{display:flex}
   .modal{background:#fff;border-radius:16px;width:100%;max-width:640px;max-height:80vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,.2)}
@@ -60,7 +96,8 @@
   .modal-body{padding:20px 24px;overflow-y:auto;flex:1}
   .modal-body pre{font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;color:#333;white-space:pre-wrap;word-break:break-all}
   .modal-footer{display:flex;justify-content:flex-end;gap:8px;padding:16px 24px;border-top:1px solid #eee}
-  @media(max-width:700px){.row{grid-template-columns:1fr;gap:14px}.row-right{justify-content:flex-start}}
+
+  @media(max-width:750px){.row{grid-template-columns:1fr;gap:14px}.row-right{justify-content:flex-start}.chip-controls{opacity:1}}
 </style>
 </head>
 <body>
@@ -68,7 +105,7 @@
   <header>
     <div>
       <h1>Chip Color Tokens</h1>
-      <p class="subtitle">Vzorník barev pro Figma • Klikni na swatch pro kopírování HEX</p>
+      <p class="subtitle">Vzorník barev pro Figma · Klikni na swatch pro kopírování HEX</p>
     </div>
     <div class="base-color">
       <div class="base-color-swatch"></div>
@@ -80,8 +117,8 @@
   </header>
 
   <div class="edit-info">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
-    Dvojklik na text chipu pro editaci názvu • Enter nebo klik mimo pro potvrzení • Editovaný text se promítne do exportu
+    <span class="material-icons-outlined">info</span>
+    <span><strong>Dvojklik</strong> na text chipu pro editaci názvu · <strong>Tečka</strong> zapne/vypne dot indikátor · <strong>Ikona</strong> otevře výběr Material Design ikon · Změny se promítnou do exportu</span>
   </div>
 
   <div class="export-bar">
@@ -113,20 +150,43 @@
 </div>
 
 <script>
+// --- Material Design icon set (curated for chips) ---
+const mdIcons = [
+  'check_circle','cancel','error','warning','info','help',
+  'schedule','update','verified','pending','task_alt','published_with_changes',
+  'build','settings','tune','construction','engineering','handyman',
+  'description','article','edit_document','note','summarize','content_paste',
+  'assignment','assignment_turned_in','assignment_late','assignment_return',
+  'flag','bookmark','label','sell','loyalty','new_releases',
+  'gavel','policy','security','shield','lock','admin_panel_settings',
+  'search','analytics','insights','trending_up','monitoring','assessment',
+  'send','forward','reply','archive','delete','restore',
+  'visibility','visibility_off','done','done_all','remove_done','sync',
+  'bolt','auto_fix_high','star','grade','thumb_up','thumb_down',
+  'notifications','campaign','announcement','report','bug_report','feedback',
+  'person','group','groups','support_agent','contact_support','manage_accounts',
+  'folder','topic','inventory','category','local_offer','receipt',
+  'event','today','calendar_month','timer','hourglass_empty','history',
+  'link','attach_file','cloud_upload','cloud_download','file_download','file_upload',
+  'code','terminal','data_object','integration_instructions','api','developer_mode',
+  'palette','brush','design_services','format_paint','color_lens','auto_awesome',
+];
+
 const chipColors = {
-  obecnePrideleni: { label: 'Obecné přidělení', bg: '#FFF2E8', border: '#FFB880', text: '#CC5700', dot: '#FF6D0A' },
-  realizovaneNapravneOpatreni: { label: 'Realizované nápravné opatření', bg: '#E8F5EC', border: '#7ACB95', text: '#1A6B38', dot: '#2E9E5A' },
-  vyjadreni: { label: 'Vyjádření', bg: '#EBF2FF', border: '#93B8FC', text: '#1E4FAA', dot: '#3B82F6' },
-  analyza: { label: 'Analýza', bg: '#F1EDFF', border: '#B8A4FB', text: '#5B32C7', dot: '#8B5CF6' },
-  ulozeneNapravneOpatreni: { label: 'Uložené nápravné opatření', bg: '#FEF3E2', border: '#F0BE5E', text: '#92570A', dot: '#D97706' },
-  ulozeneKorektivniOpatreni: { label: 'Uložené korektivní opatření', bg: '#FDECE8', border: '#F09A82', text: '#A0350E', dot: '#DC4A1A' },
-  realizovaneKorektivniOpatreni: { label: 'Realizované korektivní opatření', bg: '#E5F7EB', border: '#6DC98E', text: '#0D6930', dot: '#16A34A' },
-  realizaceNapravyDokumentu: { label: 'Realizace nápravy dokumentu', bg: '#E6F6F5', border: '#6BCAC2', text: '#0A6B63', dot: '#0D9488' },
-  technickaZmena: { label: 'Technická změna', bg: '#F3EBE6', border: '#C48E6A', text: '#6E3518', dot: '#A0522D' },
-  restrikceASankce: { label: 'Restrikce a sankce', bg: '#FDE8E8', border: '#F08080', text: '#991B1B', dot: '#DC2626' },
-  naprava: { label: 'Náprava', bg: '#FEF6E2', border: '#F5C85A', text: '#8C5E0A', dot: '#F59E0B' },
+  obecnePrideleni: { label: 'Obecné přidělení', bg: '#FFF2E8', border: '#FFB880', text: '#CC5700', dot: '#FF6D0A', showDot: true, icon: null },
+  realizovaneNapravneOpatreni: { label: 'Realizované nápravné opatření', bg: '#E8F5EC', border: '#7ACB95', text: '#1A6B38', dot: '#2E9E5A', showDot: true, icon: null },
+  vyjadreni: { label: 'Vyjádření', bg: '#EBF2FF', border: '#93B8FC', text: '#1E4FAA', dot: '#3B82F6', showDot: true, icon: null },
+  analyza: { label: 'Analýza', bg: '#F1EDFF', border: '#B8A4FB', text: '#5B32C7', dot: '#8B5CF6', showDot: true, icon: null },
+  ulozeneNapravneOpatreni: { label: 'Uložené nápravné opatření', bg: '#FEF3E2', border: '#F0BE5E', text: '#92570A', dot: '#D97706', showDot: true, icon: null },
+  ulozeneKorektivniOpatreni: { label: 'Uložené korektivní opatření', bg: '#FDECE8', border: '#F09A82', text: '#A0350E', dot: '#DC4A1A', showDot: true, icon: null },
+  realizovaneKorektivniOpatreni: { label: 'Realizované korektivní opatření', bg: '#E5F7EB', border: '#6DC98E', text: '#0D6930', dot: '#16A34A', showDot: true, icon: null },
+  realizaceNapravyDokumentu: { label: 'Realizace nápravy dokumentu', bg: '#E6F6F5', border: '#6BCAC2', text: '#0A6B63', dot: '#0D9488', showDot: true, icon: null },
+  technickaZmena: { label: 'Technická změna', bg: '#F3EBE6', border: '#C48E6A', text: '#6E3518', dot: '#A0522D', showDot: true, icon: null },
+  restrikceASankce: { label: 'Restrikce a sankce', bg: '#FDE8E8', border: '#F08080', text: '#991B1B', dot: '#DC2626', showDot: true, icon: null },
+  naprava: { label: 'Náprava', bg: '#FEF6E2', border: '#F5C85A', text: '#8C5E0A', dot: '#F59E0B', showDot: true, icon: null },
 };
 
+// --- Toast ---
 const toast = document.getElementById('toast');
 let toastTimeout;
 function showToast(msg) {
@@ -134,30 +194,95 @@ function showToast(msg) {
   clearTimeout(toastTimeout);
   toastTimeout = setTimeout(() => toast.classList.remove('show'), 1500);
 }
-function copyHex(hex) { navigator.clipboard.writeText(hex).then(() => showToast('✓ ' + hex)); }
+function copyHex(hex) { navigator.clipboard.writeText(hex).then(() => showToast('\u2713 ' + hex)); }
+
+// --- Close all icon pickers on outside click ---
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.icon-picker-wrap')) {
+    document.querySelectorAll('.icon-picker.open').forEach(p => p.classList.remove('open'));
+  }
+});
+
+// --- Toggle dot ---
+function toggleDot(key) {
+  const chip = chipColors[key];
+  chip.showDot = !chip.showDot;
+  const dotEl = document.querySelector(`.chip-dot[data-key="${key}"]`);
+  const btnEl = document.querySelector(`.dot-toggle[data-key="${key}"]`);
+  if (dotEl) dotEl.classList.toggle('hidden', !chip.showDot);
+  if (btnEl) btnEl.classList.toggle('active', chip.showDot);
+  showToast(chip.showDot ? '\u2713 Dot zapnut' : '\u2713 Dot vypnut');
+}
+
+// --- Icon picker ---
+function toggleIconPicker(key) {
+  const picker = document.querySelector(`.icon-picker[data-key="${key}"]`);
+  const wasOpen = picker.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.icon-picker.open').forEach(p => p.classList.remove('open'));
+  if (!wasOpen) {
+    picker.classList.add('open');
+    picker.querySelector('.icon-picker-search').value = '';
+    filterIcons(key, '');
+    picker.querySelector('.icon-picker-search').focus();
+  }
+}
+
+function filterIcons(key, query) {
+  const grid = document.querySelector(`.icon-picker-grid[data-key="${key}"]`);
+  const q = query.toLowerCase().trim();
+  grid.querySelectorAll('.icon-pick-item').forEach(item => {
+    const name = item.dataset.icon;
+    item.style.display = (!q || name.includes(q)) ? '' : 'none';
+  });
+}
+
+function selectIcon(key, iconName) {
+  const chip = chipColors[key];
+  chip.icon = iconName;
+  // Update chip display
+  const iconEl = document.querySelector(`.chip-icon[data-key="${key}"]`);
+  const dotEl = document.querySelector(`.chip-dot[data-key="${key}"]`);
+  if (iconName) {
+    iconEl.textContent = iconName;
+    iconEl.classList.remove('hidden');
+    dotEl.classList.add('hidden');
+    chip.showDot = false;
+    document.querySelector(`.dot-toggle[data-key="${key}"]`).classList.remove('active');
+  } else {
+    iconEl.classList.add('hidden');
+    iconEl.textContent = '';
+    chip.showDot = true;
+    dotEl.classList.remove('hidden');
+    document.querySelector(`.dot-toggle[data-key="${key}"]`).classList.add('active');
+  }
+  // Update picker selection
+  document.querySelectorAll(`.icon-picker[data-key="${key}"] .icon-pick-item`).forEach(i => {
+    i.classList.toggle('selected', i.dataset.icon === iconName);
+  });
+  // Close picker
+  document.querySelector(`.icon-picker[data-key="${key}"]`).classList.remove('open');
+  showToast(iconName ? '\u2713 Ikona: ' + iconName : '\u2713 Ikona odebrána');
+}
 
 // --- Inline edit ---
 function startEdit(el, key) {
-  const chip = el.closest('.chip');
-  chip.classList.add('editing');
+  el.closest('.chip').classList.add('editing');
   el.contentEditable = true;
   el.focus();
-  // select all text
   const range = document.createRange();
   range.selectNodeContents(el);
   const sel = window.getSelection();
   sel.removeAllRanges();
   sel.addRange(range);
 }
-
 function finishEdit(el, key) {
-  const chip = el.closest('.chip');
-  chip.classList.remove('editing');
+  el.closest('.chip').classList.remove('editing');
   el.contentEditable = false;
   const newLabel = el.textContent.trim();
   if (newLabel && chipColors[key]) {
     chipColors[key].label = newLabel;
-    showToast('✓ Přejmenováno: ' + newLabel);
+    showToast('\u2713 Přejmenováno: ' + newLabel);
   } else {
     el.textContent = chipColors[key].label;
   }
@@ -172,12 +297,36 @@ Object.entries(chipColors).forEach(([key, chip]) => {
     { hex: chip.dot, label: 'dot' }, { hex: chip.text, label: 'text' },
     { hex: chip.border, label: 'border' }, { hex: chip.bg, label: 'bg' },
   ];
+
+  const iconGridHtml = mdIcons.map(ic =>
+    `<button class="icon-pick-item" data-icon="${ic}" onclick="selectIcon('${key}','${ic}')" title="${ic}"><span class="material-icons-outlined">${ic}</span></button>`
+  ).join('');
+
   row.innerHTML = `
     <div class="row-left">
-      <div class="chip" style="background:${chip.bg};border:1px solid ${chip.border};color:${chip.text}">
-        <div class="chip-dot" style="background:${chip.dot}"></div>
-        <span class="chip-label" data-key="${key}">${chip.label}</span>
-        <span class="chip-edit-hint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></span>
+      <div class="chip-row">
+        <div class="chip" style="background:${chip.bg};border:1px solid ${chip.border};color:${chip.text}">
+          <div class="chip-dot${chip.showDot ? '' : ' hidden'}" data-key="${key}" style="background:${chip.dot}"></div>
+          <span class="chip-icon material-icons-outlined${chip.icon ? '' : ' hidden'}" data-key="${key}" style="color:${chip.dot}">${chip.icon || ''}</span>
+          <span class="chip-label" data-key="${key}">${chip.label}</span>
+        </div>
+        <div class="chip-controls">
+          <button class="ctrl-btn dot-toggle${chip.showDot ? ' active' : ''}" data-key="${key}" onclick="toggleDot('${key}')" title="Zapnout/vypnout dot">
+            <span class="material-icons-outlined">fiber_manual_record</span>
+          </button>
+          <div class="icon-picker-wrap">
+            <button class="ctrl-btn" onclick="toggleIconPicker('${key}')" title="Vybrat ikonu">
+              <span class="material-icons-outlined">emoji_symbols</span>
+            </button>
+            <div class="icon-picker" data-key="${key}">
+              <input type="text" class="icon-picker-search" placeholder="Hledat ikonu..." oninput="filterIcons('${key}', this.value)">
+              <button class="icon-picker-none" onclick="selectIcon('${key}', null)">✕ Bez ikony (použít dot)</button>
+              <div class="icon-picker-grid" data-key="${key}">
+                ${iconGridHtml}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <span class="token-name">${key}</span>
     </div>
@@ -207,32 +356,46 @@ let currentFormat = 'json', currentCode = '';
 function toKebab(s) { return s.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase(); }
 
 function generateExport(fmt) {
+  // Build clean export data
+  const exportData = {};
+  Object.entries(chipColors).forEach(([k, c]) => {
+    const entry = { label: c.label, bg: c.bg, border: c.border, text: c.text, dot: c.dot };
+    if (c.icon) entry.icon = c.icon;
+    entry.showDot = c.showDot;
+    exportData[k] = entry;
+  });
+
   switch(fmt) {
-    case 'json': return JSON.stringify(chipColors, null, 2);
+    case 'json': return JSON.stringify(exportData, null, 2);
     case 'css': {
       let o = ':root {\n';
-      Object.entries(chipColors).forEach(([k, c]) => {
+      Object.entries(exportData).forEach(([k, c]) => {
         const n = toKebab(k);
-        o += `  /* ${c.label} */\n  --chip-${n}-bg: ${c.bg};\n  --chip-${n}-border: ${c.border};\n  --chip-${n}-text: ${c.text};\n  --chip-${n}-dot: ${c.dot};\n\n`;
+        o += `  /* ${c.label}${c.icon ? ' [icon: ' + c.icon + ']' : ''}${!c.showDot ? ' [no-dot]' : ''} */\n`;
+        o += `  --chip-${n}-bg: ${c.bg};\n  --chip-${n}-border: ${c.border};\n  --chip-${n}-text: ${c.text};\n  --chip-${n}-dot: ${c.dot};\n\n`;
       });
       return o + '}';
     }
     case 'scss': {
       let o = '// Chip Color Tokens\n\n';
-      Object.entries(chipColors).forEach(([k, c]) => {
+      Object.entries(exportData).forEach(([k, c]) => {
         const n = toKebab(k);
-        o += `// ${c.label}\n$chip-${n}-bg: ${c.bg};\n$chip-${n}-border: ${c.border};\n$chip-${n}-text: ${c.text};\n$chip-${n}-dot: ${c.dot};\n\n`;
+        o += `// ${c.label}${c.icon ? ' [icon: ' + c.icon + ']' : ''}\n`;
+        o += `$chip-${n}-bg: ${c.bg};\n$chip-${n}-border: ${c.border};\n$chip-${n}-text: ${c.text};\n$chip-${n}-dot: ${c.dot};\n\n`;
       });
       o += '$chip-colors: (\n';
-      Object.entries(chipColors).forEach(([k, c], i, a) => {
+      Object.entries(exportData).forEach(([k, c], i, a) => {
         const n = toKebab(k);
-        o += `  "${n}": (bg: $chip-${n}-bg, border: $chip-${n}-border, text: $chip-${n}-text, dot: $chip-${n}-dot)${i<a.length-1?',':''}\n`;
+        let val = `bg: $chip-${n}-bg, border: $chip-${n}-border, text: $chip-${n}-text, dot: $chip-${n}-dot`;
+        if (c.icon) val += `, icon: "${c.icon}"`;
+        val += `, show-dot: ${c.showDot}`;
+        o += `  "${n}": (${val})${i < a.length - 1 ? ',' : ''}\n`;
       });
       return o + ');\n';
     }
     case 'tailwind': {
       let o = '// tailwind.config.js\nmodule.exports = {\n  theme: {\n    extend: {\n      colors: {\n        chip: {\n';
-      Object.entries(chipColors).forEach(([k, c]) => {
+      Object.entries(exportData).forEach(([k, c]) => {
         const n = toKebab(k);
         o += `          '${n}': { bg: '${c.bg}', border: '${c.border}', text: '${c.text}', dot: '${c.dot}' },\n`;
       });
@@ -240,21 +403,29 @@ function generateExport(fmt) {
     }
     case 'ts': {
       let o = 'export const chipColors = {\n';
-      Object.entries(chipColors).forEach(([k, c]) => {
-        o += `  ${k}: { label: '${c.label}', bg: '${c.bg}', border: '${c.border}', text: '${c.text}', dot: '${c.dot}' },\n`;
+      Object.entries(exportData).forEach(([k, c]) => {
+        let props = `label: '${c.label}', bg: '${c.bg}', border: '${c.border}', text: '${c.text}', dot: '${c.dot}'`;
+        if (c.icon) props += `, icon: '${c.icon}'`;
+        props += `, showDot: ${c.showDot}`;
+        o += `  ${k}: { ${props} },\n`;
       });
-      return o + '} as const;\n\nexport type ChipColorKey = keyof typeof chipColors;\nexport type ChipColorToken = { label: string; bg: string; border: string; text: string; dot: string; };\n';
+      o += '} as const;\n\nexport type ChipColorKey = keyof typeof chipColors;\n';
+      o += 'export type ChipColorToken = {\n  label: string; bg: string; border: string; text: string; dot: string;\n  icon?: string; showDot: boolean;\n};\n';
+      return o;
     }
     case 'figma': {
       const obj = { chip: {} };
-      Object.entries(chipColors).forEach(([k, c]) => {
+      Object.entries(exportData).forEach(([k, c]) => {
         const n = toKebab(k);
-        obj.chip[n] = {
+        const entry = {
           bg: { value: c.bg, type: 'color', description: c.label + ' – pozadí' },
           border: { value: c.border, type: 'color', description: c.label + ' – okraj' },
           text: { value: c.text, type: 'color', description: c.label + ' – text' },
           dot: { value: c.dot, type: 'color', description: c.label + ' – indikátor' },
         };
+        if (c.icon) entry.icon = { value: c.icon, type: 'other', description: 'Material icon name' };
+        entry.showDot = { value: c.showDot, type: 'boolean', description: 'Zobrazit dot indikátor' };
+        obj.chip[n] = entry;
       });
       return '// Figma Token Studio format\n' + JSON.stringify(obj, null, 2);
     }
@@ -272,13 +443,13 @@ function openExportModal(fmt) {
   document.getElementById('modal').classList.add('open');
 }
 function closeModal(e) { if(!e || e.target === document.getElementById('modal')) document.getElementById('modal').classList.remove('open'); }
-function copyExport() { navigator.clipboard.writeText(currentCode).then(() => showToast('✓ ' + fmtLabels[currentFormat] + ' zkopírován')); }
+function copyExport() { navigator.clipboard.writeText(currentCode).then(() => showToast('\u2713 ' + fmtLabels[currentFormat] + ' zkopírován')); }
 function downloadExport() {
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([currentCode], {type:'text/plain'}));
+  a.href = URL.createObjectURL(new Blob([currentCode], {type:'text/plain;charset=utf-8'}));
   a.download = 'chip-tokens.' + fmtExts[currentFormat];
   a.click();
-  showToast('✓ Staženo: ' + a.download);
+  showToast('\u2713 Staženo: ' + a.download);
 }
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
 </script>
