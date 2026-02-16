@@ -2,8 +2,9 @@
 <html lang="cs">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chip Color Tokens â VzornÃ­k</title>
+<title>Chip Color Tokens – Vzorník</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap');
   *{margin:0;padding:0;box-sizing:border-box}
@@ -67,7 +68,7 @@
   <header>
     <div>
       <h1>Chip Color Tokens</h1>
-      <p class="subtitle">VzornÃ­k barev pro Figma â¢ Klikni na swatch pro kopÃ­rovÃ¡nÃ­ HEX</p>
+      <p class="subtitle">Vzorník barev pro Figma • Klikni na swatch pro kopírování HEX</p>
     </div>
     <div class="base-color">
       <div class="base-color-swatch"></div>
@@ -80,7 +81,7 @@
 
   <div class="edit-info">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
-    Dvojklik na text chipu pro editaci nÃ¡zvu â¢ Enter nebo klik mimo pro potvrzenÃ­ â¢ EditovanÃ½ text se promÃ­tne do exportu
+    Dvojklik na text chipu pro editaci názvu • Enter nebo klik mimo pro potvrzení • Editovaný text se promítne do exportu
   </div>
 
   <div class="export-bar">
@@ -105,25 +106,25 @@
     </div>
     <div class="modal-body"><pre id="modalCode"></pre></div>
     <div class="modal-footer">
-      <button class="export-btn" onclick="copyExport()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>KopÃ­rovat</button>
-      <button class="export-btn download" onclick="downloadExport()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>StÃ¡hnout</button>
+      <button class="export-btn" onclick="copyExport()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Kopírovat</button>
+      <button class="export-btn download" onclick="downloadExport()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Stáhnout</button>
     </div>
   </div>
 </div>
 
 <script>
 const chipColors = {
-  obecnePrideleni: { label: 'ObecnÃ© pÅidÄlenÃ­', bg: '#FFF2E8', border: '#FFB880', text: '#CC5700', dot: '#FF6D0A' },
-  realizovaneNapravneOpatreni: { label: 'RealizovanÃ© nÃ¡pravnÃ© opatÅenÃ­', bg: '#E8F5EC', border: '#7ACB95', text: '#1A6B38', dot: '#2E9E5A' },
-  vyjadreni: { label: 'VyjÃ¡dÅenÃ­', bg: '#EBF2FF', border: '#93B8FC', text: '#1E4FAA', dot: '#3B82F6' },
-  analyza: { label: 'AnalÃ½za', bg: '#F1EDFF', border: '#B8A4FB', text: '#5B32C7', dot: '#8B5CF6' },
-  ulozeneNapravneOpatreni: { label: 'UloÅ¾enÃ© nÃ¡pravnÃ© opatÅenÃ­', bg: '#FEF3E2', border: '#F0BE5E', text: '#92570A', dot: '#D97706' },
-  ulozeneKorektivniOpatreni: { label: 'UloÅ¾enÃ© korektivnÃ­ opatÅenÃ­', bg: '#FDECE8', border: '#F09A82', text: '#A0350E', dot: '#DC4A1A' },
-  realizovaneKorektivniOpatreni: { label: 'RealizovanÃ© korektivnÃ­ opatÅenÃ­', bg: '#E5F7EB', border: '#6DC98E', text: '#0D6930', dot: '#16A34A' },
-  realizaceNapravyDokumentu: { label: 'Realizace nÃ¡pravy dokumentu', bg: '#E6F6F5', border: '#6BCAC2', text: '#0A6B63', dot: '#0D9488' },
-  technickaZmena: { label: 'TechnickÃ¡ zmÄna', bg: '#F3EBE6', border: '#C48E6A', text: '#6E3518', dot: '#A0522D' },
+  obecnePrideleni: { label: 'Obecné přidělení', bg: '#FFF2E8', border: '#FFB880', text: '#CC5700', dot: '#FF6D0A' },
+  realizovaneNapravneOpatreni: { label: 'Realizované nápravné opatření', bg: '#E8F5EC', border: '#7ACB95', text: '#1A6B38', dot: '#2E9E5A' },
+  vyjadreni: { label: 'Vyjádření', bg: '#EBF2FF', border: '#93B8FC', text: '#1E4FAA', dot: '#3B82F6' },
+  analyza: { label: 'Analýza', bg: '#F1EDFF', border: '#B8A4FB', text: '#5B32C7', dot: '#8B5CF6' },
+  ulozeneNapravneOpatreni: { label: 'Uložené nápravné opatření', bg: '#FEF3E2', border: '#F0BE5E', text: '#92570A', dot: '#D97706' },
+  ulozeneKorektivniOpatreni: { label: 'Uložené korektivní opatření', bg: '#FDECE8', border: '#F09A82', text: '#A0350E', dot: '#DC4A1A' },
+  realizovaneKorektivniOpatreni: { label: 'Realizované korektivní opatření', bg: '#E5F7EB', border: '#6DC98E', text: '#0D6930', dot: '#16A34A' },
+  realizaceNapravyDokumentu: { label: 'Realizace nápravy dokumentu', bg: '#E6F6F5', border: '#6BCAC2', text: '#0A6B63', dot: '#0D9488' },
+  technickaZmena: { label: 'Technická změna', bg: '#F3EBE6', border: '#C48E6A', text: '#6E3518', dot: '#A0522D' },
   restrikceASankce: { label: 'Restrikce a sankce', bg: '#FDE8E8', border: '#F08080', text: '#991B1B', dot: '#DC2626' },
-  naprava: { label: 'NÃ¡prava', bg: '#FEF6E2', border: '#F5C85A', text: '#8C5E0A', dot: '#F59E0B' },
+  naprava: { label: 'Náprava', bg: '#FEF6E2', border: '#F5C85A', text: '#8C5E0A', dot: '#F59E0B' },
 };
 
 const toast = document.getElementById('toast');
@@ -133,7 +134,7 @@ function showToast(msg) {
   clearTimeout(toastTimeout);
   toastTimeout = setTimeout(() => toast.classList.remove('show'), 1500);
 }
-function copyHex(hex) { navigator.clipboard.writeText(hex).then(() => showToast('â ' + hex)); }
+function copyHex(hex) { navigator.clipboard.writeText(hex).then(() => showToast('✓ ' + hex)); }
 
 // --- Inline edit ---
 function startEdit(el, key) {
@@ -156,7 +157,7 @@ function finishEdit(el, key) {
   const newLabel = el.textContent.trim();
   if (newLabel && chipColors[key]) {
     chipColors[key].label = newLabel;
-    showToast('â PÅejmenovÃ¡no: ' + newLabel);
+    showToast('✓ Přejmenováno: ' + newLabel);
   } else {
     el.textContent = chipColors[key].label;
   }
@@ -219,7 +220,7 @@ function generateExport(fmt) {
     case 'scss': {
       let o = '// Chip Color Tokens\n\n';
       Object.entries(chipColors).forEach(([k, c]) => {
-        const n = toKebac(k);
+        const n = toKebab(k);
         o += `// ${c.label}\n$chip-${n}-bg: ${c.bg};\n$chip-${n}-border: ${c.border};\n$chip-${n}-text: ${c.text};\n$chip-${n}-dot: ${c.dot};\n\n`;
       });
       o += '$chip-colors: (\n';
@@ -249,10 +250,10 @@ function generateExport(fmt) {
       Object.entries(chipColors).forEach(([k, c]) => {
         const n = toKebab(k);
         obj.chip[n] = {
-          bg: { value: c.bg, type: 'color', description: c.label + ' â pozadÃ­' },
-          border: { value: c.border, type: 'color', description: c.label + ' â okraj' },
-          text: { value: c.text, type: 'color', description: c.label + ' â text' },
-          dot: { value: c.dot, type: 'color', description: c.label + ' â indikÃ¡tor' },
+          bg: { value: c.bg, type: 'color', description: c.label + ' – pozadí' },
+          border: { value: c.border, type: 'color', description: c.label + ' – okraj' },
+          text: { value: c.text, type: 'color', description: c.label + ' – text' },
+          dot: { value: c.dot, type: 'color', description: c.label + ' – indikátor' },
         };
       });
       return '// Figma Token Studio format\n' + JSON.stringify(obj, null, 2);
@@ -266,18 +267,18 @@ const fmtExts = { json:'json', css:'css', scss:'scss', tailwind:'js', ts:'ts', f
 function openExportModal(fmt) {
   currentFormat = fmt;
   currentCode = generateExport(fmt);
-  document.getElementById('modalTitle').textContent = 'Export â ' + fmtLabels[fmt];
+  document.getElementById('modalTitle').textContent = 'Export – ' + fmtLabels[fmt];
   document.getElementById('modalCode').textContent = currentCode;
   document.getElementById('modal').classList.add('open');
 }
 function closeModal(e) { if(!e || e.target === document.getElementById('modal')) document.getElementById('modal').classList.remove('open'); }
-function copyExport() { navigator.clipboard.writeText(currentCode).then(() => showToast('â ' + fmtLabels[currentFormat] + ' zkopÃ­rovÃ¡n')); }
+function copyExport() { navigator.clipboard.writeText(currentCode).then(() => showToast('✓ ' + fmtLabels[currentFormat] + ' zkopírován')); }
 function downloadExport() {
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([currentCode], {type:'text/plain'}));
   a.download = 'chip-tokens.' + fmtExts[currentFormat];
   a.click();
-  showToast('â StaÅ¾eno: ' + a.download);
+  showToast('✓ Staženo: ' + a.download);
 }
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
 </script>
